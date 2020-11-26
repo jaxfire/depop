@@ -7,6 +7,9 @@ ext {
     // Libraries
     koinVersion = '2.2.1'
     navVersion = '2.3.1'
+    retrofitVersion = '2.7.1'
+    gsonVersion = '2.8.6'
+    converterGsonVersion = '2.6.2'
 
     // Testing
     jUnitVersion = '4.13.1'
