@@ -1,0 +1,13 @@
+ext {
+    // Android
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 29
+    kotlinVersion = '1.4.10'
+
+    // Libraries
+    koinVersion = '2.2.1'
+
+    // Testing
+    jUnitVersion = '4.13.1'
+    mockitoVersion = '2.2.0'
+}
