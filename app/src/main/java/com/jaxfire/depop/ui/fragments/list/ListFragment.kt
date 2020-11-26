@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.jaxfire.depop.R
 import com.jaxfire.depop.ui.fragments.sharedViewModel.ListDetailViewModel
+import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ListFragment : Fragment() {
@@ -29,5 +32,9 @@ class ListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("jim", "Detail: ${viewModel.myValue}")
+
+        testButton.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_detailFragment)
+        }
     }
 }

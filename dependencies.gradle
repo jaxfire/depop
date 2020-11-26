@@ -6,6 +6,7 @@ ext {
 
     // Libraries
     koinVersion = '2.2.1'
+    navVersion = '2.3.1'
 
     // Testing
     jUnitVersion = '4.13.1'
