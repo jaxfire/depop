@@ -6,7 +6,11 @@ data class Product(
     val pictures: List<Picture>
 ) {
     data class Picture(
-        val size: Pair<Int, Int>,
-        val url: String
-    )
+        val formats: List<Format>,
+    ) {
+        class Format(
+            val size: Pair<Int, Int>,
+            val url: String
+        )
+    }
 }

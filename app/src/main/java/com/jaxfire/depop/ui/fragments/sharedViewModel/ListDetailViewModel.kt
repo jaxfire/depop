@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class ListDetailViewModel(productRepository: ProductRepository): ViewModel() {
 
-    val showProgressSpinner = MutableLiveData(false)
+    val showProgressSpinner = MutableLiveData<Boolean>()
     val products = MutableLiveData<List<Product>>()
 
     init {

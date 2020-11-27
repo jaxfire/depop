@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class ProductResponse(
     @SerializedName("objects")
-    val products: List<Product>
+    val productData: List<ProductData>
 ) {
 
-    data class Product(
+    data class ProductData(
         val id: Long,
         val description: String,
         @SerializedName("pictures_data")
@@ -24,8 +24,6 @@ data class ProductResponse(
             val p1: FormatData,
             @SerializedName("P2")
             val p2: FormatData,
-            @SerializedName("P3")
-            val p3: FormatData,
             @SerializedName("P4")
             val p4: FormatData,
             @SerializedName("P5")
@@ -36,8 +34,6 @@ data class ProductResponse(
             val p7: FormatData,
             @SerializedName("P8")
             val p8: FormatData,
-            @SerializedName("P9")
-            val p9: FormatData,
         ) {
             data class FormatData(
                 val url: String,
