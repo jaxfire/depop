@@ -14,4 +14,17 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
+    <TextView
+        android:id="@+id/fakeAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:layout_gravity="top"
+        android:background="@color/white"
+        style="@style/TextStyleBase.ExtraBold"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="36sp"
+        android:elevation="4dp"
+        android:text="@string/depop"/>
+
 </FrameLayout>
