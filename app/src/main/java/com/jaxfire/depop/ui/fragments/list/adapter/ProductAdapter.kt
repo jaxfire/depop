@@ -32,7 +32,6 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
             itemClickListener
         )
 
-
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
         holder.bindProduct(products[position])
     }
@@ -55,8 +54,9 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
 
         fun bindProduct(product: Product) {
             this.product = product
-            view.textViewProductListItemTitle.text = product.userId.toString()
-            view.textViewProductListItemShortDescription.text = product.shortDescription
+            val titleText = "Seller ${product.userId}"
+            view.textViewProductListItemTitle.text = titleText
+            view.textViewProductListItemShortDescription.text = product.description
             if (product.pictures.isNotEmpty()) {
                 Glide.with(view).load(product.pictures.first().getImageUrl(PictureSize.M)).into(view.imageViewProductListItemImage)
             }

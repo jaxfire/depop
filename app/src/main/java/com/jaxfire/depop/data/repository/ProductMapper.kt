@@ -12,8 +12,7 @@ class ProductMapper {
         return dataProducts.map { product ->
             Product(
                 userId = product.id,
-                fullDescription = product.description,
-                shortDescription = generateShortDescription(product.description),
+                description = product.description,
                 pictures = product.picturesData.map { pictureData ->
 
                     val formats = HashMap<PictureSize, String>()
@@ -47,11 +46,5 @@ class ProductMapper {
             width > 210 -> PictureSize.XS
             else -> PictureSize.XXS
         }
-    }
-
-    private fun generateShortDescription(description: String): String {
-        var shortDescription = description.take(100)
-        if (shortDescription.length < description.length) shortDescription = "$shortDescription..."
-        return shortDescription
     }
 }

@@ -4,8 +4,7 @@ import com.jaxfire.depop.data.repository.entity.Product.Picture.PictureSize.*
 
 data class Product(
     val userId: Long,
-    val fullDescription: String,
-    val shortDescription: String,
+    val description: String,
     val pictures: List<Picture>
 ) {
     class Picture(
