@@ -35,7 +35,6 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     }
 
     private val productsObserver = Observer<List<Product>> { products ->
-        Log.d("jim", "Product list updated. Size: ${products.size}")
         adapter.setProducts(products)
     }
 
