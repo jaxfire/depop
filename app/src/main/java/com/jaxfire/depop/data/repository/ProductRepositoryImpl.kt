@@ -5,17 +5,15 @@ import com.jaxfire.depop.data.network.ProductApiService
 import com.jaxfire.depop.data.repository.entity.Product
 import com.jaxfire.depop.internal.NoConnectivityException
 import retrofit2.HttpException
-import java.io.IOException
 
 class ProductRepositoryImpl(private val productApiService: ProductApiService) : ProductRepository {
 
-    override suspend fun getAllProducts(): List<Product> {
+    override suspend fun getAllProducts(): ResultWrapper<List<Product>> {
 
-        val products = mutableListOf<Product>()
+        val result: ResultWrapper<List<Product>>
 
         try {
-
-            products.addAll(productApiService.getProducts().productData.map { product ->
+            val products = productApiService.getProducts().productData.map { product ->
                 Product(
                     userId = product.id,
                     description = product.description,
@@ -122,29 +120,23 @@ class ProductRepositoryImpl(private val productApiService: ProductApiService) : 
                         Product.Picture(formats = formats)
                     }
                 )
-            })
+            }
 
-            return products
+            return ResultWrapper.Success(products)
 
         } catch (throwable: Throwable) {
-            when (throwable) {
+            return when (throwable) {
                 is NoConnectivityException -> {
-                    Log.d("jim", "No connectivity exception")
+                    ResultWrapper.NetworkError
                 }
                 is HttpException -> {
-                    val code = throwable.code()
-                    Log.d("jim", "HttpException: $code")
-//                    val errorResponse = convertErrorBody(throwable)
-//                    ResultWrapper.GenericError(code, errorResponse)
+                    // TODO: Cloud reporting - throwable.code()
+                    ResultWrapper.GenericError
                 }
                 else -> {
-                    Log.d("jim", "Generic Error: ${throwable.message}")
-//                    ResultWrapper.GenericError(null, null)
+                    ResultWrapper.GenericError
                 }
             }
-            // TODO: Handle. In call result?
-//            Log.d("jim", "No connectivity")
-            return emptyList()
         }
     }
 }

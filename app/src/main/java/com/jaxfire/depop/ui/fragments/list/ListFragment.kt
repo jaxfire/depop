@@ -18,6 +18,10 @@ class ListFragment : Fragment() {
 
     private val viewModel by sharedViewModel<ListDetailViewModel>()
 
+    private val errorObserver = Observer<String> { errorMessage ->
+        Log.d("jim", "Show error message: $errorMessage")
+    }
+
     private val showProgressSpinnerObserver = Observer<Boolean> { requestInProgress ->
         Log.d("jim", "requestInProgress: $requestInProgress")
     }
@@ -29,19 +33,20 @@ class ListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.showErrorMessage.observe(this, errorObserver)
         viewModel.showProgressSpinner.observe(this, showProgressSpinnerObserver)
         viewModel.products.observe(this, productsObserver)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onResume() {
         super.onResume()
+
         testButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_detailFragment)
         }

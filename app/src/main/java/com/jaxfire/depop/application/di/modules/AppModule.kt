@@ -15,5 +15,5 @@ val appModule = module {
     single<ConnectivityInterceptor> { ConnectivityInterceptorImpl(androidApplication()) }
     single { ProductApiService(get()) }
     single<ProductRepository> { ProductRepositoryImpl(get()) }
-    viewModel { ListDetailViewModel(get()) }
+    viewModel { ListDetailViewModel(androidApplication(), get()) }
 }
