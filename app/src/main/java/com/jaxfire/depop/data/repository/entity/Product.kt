@@ -2,7 +2,8 @@ package com.jaxfire.depop.data.repository.entity
 
 data class Product(
     val userId: Long,
-    val description: String,
+    val fullDescription: String,
+    val shortDescription: String,
     val pictures: List<Picture>
 ) {
     data class Picture(

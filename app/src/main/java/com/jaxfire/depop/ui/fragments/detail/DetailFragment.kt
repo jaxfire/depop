@@ -15,10 +15,6 @@ class DetailFragment : Fragment() {
 
     private val viewModel by sharedViewModel<ListDetailViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

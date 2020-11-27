@@ -1,10 +1,8 @@
 package com.jaxfire.depop.ui.fragments.list.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.jaxfire.depop.R
 import com.jaxfire.depop.data.repository.entity.Product
@@ -56,7 +54,7 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
         fun bindProduct(product: Product) {
             this.product = product
             view.listItemUserId.text = product.userId.toString()
-            view.listItemShortDescription.text = product.description
+            view.listItemShortDescription.text = product.shortDescription
             view.isEnabled = true
         }
     }
