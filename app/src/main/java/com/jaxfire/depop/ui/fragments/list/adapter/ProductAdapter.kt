@@ -10,7 +10,10 @@ import com.jaxfire.depop.data.repository.entity.Product
 import com.jaxfire.depop.data.repository.entity.Product.Picture.PictureSize
 import kotlinx.android.synthetic.main.product_list_item.view.*
 
-class ProductAdapter(private val products: MutableList<Product>, private val itemClickListener: ProductItemClickListener) :
+class ProductAdapter(
+    private val products: MutableList<Product>,
+    private val itemClickListener: ProductItemClickListener
+) :
     RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
     interface ProductItemClickListener {
@@ -38,14 +41,15 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
 
     override fun getItemCount() = products.size
 
-    class ProductHolder(private val view: View, private val itemClickListener: ProductItemClickListener
+    class ProductHolder(
+        private val view: View, private val itemClickListener: ProductItemClickListener
     ) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         private lateinit var product: Product
 
         init {
             view.setOnClickListener(this)
-            view.isEnabled = false
+            view.isClickable = false
         }
 
         override fun onClick(v: View) {
@@ -54,14 +58,13 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
 
         fun bindProduct(product: Product) {
             this.product = product
-            val titleText = "Seller ${product.userId}"
-            view.textViewProductListItemTitle.text = titleText
+            view.textViewProductListItemTitle.text = product.userId.toString()
             view.textViewProductListItemShortDescription.text = product.description
-            if (product.pictures.isNotEmpty()) {
-                Glide.with(view).load(product.pictures.first().getImageUrl(PictureSize.M)).into(view.imageViewProductListItemImage)
-            }
-            view.imageViewProductListItemImage
-            view.isEnabled = true
+            Glide
+                .with(view)
+                .load(product.pictures.firstOrNull()?.getImageUrl(PictureSize.M))
+                .into(view.imageViewProductListItemImage)
+            view.isClickable = true
         }
     }
 }
