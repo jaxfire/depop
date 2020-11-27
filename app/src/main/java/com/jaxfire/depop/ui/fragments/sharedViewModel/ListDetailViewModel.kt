@@ -29,6 +29,7 @@ class ListDetailViewModel(
         showProgressSpinner.postValue(true)
 
         viewModelScope.launch(Dispatchers.IO) {
+
             when (val response = productRepository.getAllProducts()) {
                 is ResultWrapper.Success<List<Product>> -> handleSuccess(response.value)
                 is ResultWrapper.NetworkError -> handleNetworkError()

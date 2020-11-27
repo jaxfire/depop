@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,11 +20,12 @@ class ListFragment : Fragment() {
     private val viewModel by sharedViewModel<ListDetailViewModel>()
 
     private val errorObserver = Observer<String> { errorMessage ->
-        Log.d("jim", "Show error message: $errorMessage")
+        errorOverlay.visibility = VISIBLE
+        errorTextView.text = errorMessage
     }
 
     private val showProgressSpinnerObserver = Observer<Boolean> { requestInProgress ->
-        Log.d("jim", "requestInProgress: $requestInProgress")
+        progressSpinner.visibility = if (requestInProgress) VISIBLE else GONE
     }
 
     private val productsObserver = Observer<List<Product>> { products ->
@@ -47,8 +49,8 @@ class ListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        testButton.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_detailFragment)
-        }
+//        testButton.setOnClickListener {
+//            findNavController().navigate(R.id.action_listFragment_to_detailFragment)
+//        }
     }
 }
