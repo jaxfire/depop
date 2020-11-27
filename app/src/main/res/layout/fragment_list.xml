@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/app_bar_height"
     tools:context=".ui.fragments.list.ListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productRecyclerView"
+        android:id="@+id/recyclerViewListFragmentProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/app_bar_height"/>
+        android:scrollbars="none"/>
 
     <ProgressBar
-        android:id="@+id/progressSpinner"
+        android:id="@+id/progressBarListFragment"
         android:layout_width="50dp"
         android:layout_height="50dp"
         style="?android:attr/progressBarStyleHorizontal"
@@ -22,14 +22,14 @@
         android:visibility="gone"/>
 
     <FrameLayout
-        android:id="@+id/errorOverlay"
+        android:id="@+id/containerListFragmentErrorOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/errorTextView"
+            android:id="@+id/textViewListFragmentErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

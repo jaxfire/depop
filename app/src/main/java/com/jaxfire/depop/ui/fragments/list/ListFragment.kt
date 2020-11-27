@@ -1,7 +1,6 @@
 package com.jaxfire.depop.ui.fragments.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -26,12 +25,12 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val errorObserver = Observer<String> { errorMessage ->
-        errorOverlay.visibility = VISIBLE
-        errorTextView.text = errorMessage
+        containerListFragmentErrorOverlay.visibility = VISIBLE
+        textViewListFragmentErrorMessage.text = errorMessage
     }
 
     private val showProgressSpinnerObserver = Observer<Boolean> { requestInProgress ->
-        progressSpinner.visibility = if (requestInProgress) VISIBLE else GONE
+        progressBarListFragment.visibility = if (requestInProgress) VISIBLE else GONE
     }
 
     private val productsObserver = Observer<List<Product>> { products ->
@@ -48,9 +47,9 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         linearLayoutManager = LinearLayoutManager(requireContext())
-        productRecyclerView.layoutManager = linearLayoutManager
+        recyclerViewListFragmentProduct.layoutManager = linearLayoutManager
         adapter = ProductAdapter(mutableListOf(), this)
-        productRecyclerView.adapter = adapter
+        recyclerViewListFragmentProduct.adapter = adapter
 
         viewModel.showErrorMessage.observe(viewLifecycleOwner, errorObserver)
         viewModel.showProgressSpinner.observe(viewLifecycleOwner, showProgressSpinnerObserver)
