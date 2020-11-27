@@ -10,6 +10,7 @@ ext {
     retrofitVersion = '2.7.1'
     gsonVersion = '2.8.6'
     converterGsonVersion = '2.6.2'
+    glideVersion = '4.11.0'
 
     // Testing
     jUnitVersion = '4.13.1'

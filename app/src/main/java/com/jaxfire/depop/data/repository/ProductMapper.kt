@@ -1,9 +1,12 @@
 package com.jaxfire.depop.data.repository
 
 import com.jaxfire.depop.data.network.response.ProductResponse
+import com.jaxfire.depop.data.network.response.ProductResponse.ProductData.FormatData
 import com.jaxfire.depop.data.repository.entity.Product
+import com.jaxfire.depop.data.repository.entity.Product.Picture
+import com.jaxfire.depop.data.repository.entity.Product.Picture.*
 
-class ProductMapper() {
+class ProductMapper {
 
     fun mapToDomainProducts(dataProducts: List<ProductResponse.ProductData>): List<Product> {
         return dataProducts.map { product ->
@@ -13,107 +16,36 @@ class ProductMapper() {
                 shortDescription = generateShortDescription(product.description),
                 pictures = product.picturesData.map { pictureData ->
 
-                    val formats = mutableListOf<Product.Picture.Format>()
+                    val formats = HashMap<PictureSize, String>()
 
-                    if (pictureData.formats.p0.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p0.width,
-                                    pictureData.formats.p0.width
-                                ),
-                                url = pictureData.formats.p0.url
-                            )
-                        )
-                    }
+                    addFormat(formats, pictureData.formats.p1)
+                    addFormat(formats, pictureData.formats.p2)
+                    addFormat(formats, pictureData.formats.p4)
+                    addFormat(formats, pictureData.formats.p5)
+                    addFormat(formats, pictureData.formats.p6)
+                    addFormat(formats, pictureData.formats.p7)
+                    addFormat(formats, pictureData.formats.p8)
 
-                    if (pictureData.formats.p1.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p1.width,
-                                    pictureData.formats.p1.width
-                                ),
-                                url = pictureData.formats.p1.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p2.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p2.width,
-                                    pictureData.formats.p2.width
-                                ),
-                                url = pictureData.formats.p2.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p4.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p4.width,
-                                    pictureData.formats.p4.width
-                                ),
-                                url = pictureData.formats.p4.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p5.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p5.width,
-                                    pictureData.formats.p5.width
-                                ),
-                                url = pictureData.formats.p5.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p6.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p6.width,
-                                    pictureData.formats.p6.width
-                                ),
-                                url = pictureData.formats.p6.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p7.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p7.width,
-                                    pictureData.formats.p7.width
-                                ),
-                                url = pictureData.formats.p7.url
-                            )
-                        )
-                    }
-
-                    if (pictureData.formats.p8.equals("null").not()) {
-                        formats.add(
-                            Product.Picture.Format(
-                                size = Pair(
-                                    pictureData.formats.p8.width,
-                                    pictureData.formats.p8.width
-                                ),
-                                url = pictureData.formats.p8.url
-                            )
-                        )
-                    }
-
-                    Product.Picture(formats = formats)
+                    Picture(formats = formats)
                 }
             )
+        }
+    }
+
+    private fun addFormat(formats: HashMap<PictureSize, String>, formatData: FormatData.FormatData) {
+        if (formatData.equals("null").not()) {
+            formats[getSize(formatData.width)] = formatData.url
+        }
+    }
+
+    private fun getSize(width: Int): PictureSize {
+        return when {
+            width > 960 -> PictureSize.XXL
+            width > 640 -> PictureSize.XL
+            width > 480 -> PictureSize.L
+            width > 320 -> PictureSize.M
+            width > 210 -> PictureSize.XS
+            else -> PictureSize.XXS
         }
     }
 

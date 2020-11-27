@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jaxfire.depop.R
 import com.jaxfire.depop.data.repository.entity.Product
+import com.jaxfire.depop.data.repository.entity.Product.Picture.PictureSize
 import kotlinx.android.synthetic.main.product_list_item.view.*
 
 class ProductAdapter(private val products: MutableList<Product>, private val itemClickListener: ProductItemClickListener) :
@@ -53,8 +55,12 @@ class ProductAdapter(private val products: MutableList<Product>, private val ite
 
         fun bindProduct(product: Product) {
             this.product = product
-            view.listItemUserId.text = product.userId.toString()
-            view.listItemShortDescription.text = product.shortDescription
+            view.textViewProductListItemTitle.text = product.userId.toString()
+            view.textViewProductListItemShortDescription.text = product.shortDescription
+            if (product.pictures.isNotEmpty()) {
+                Glide.with(view).load(product.pictures.first().getImageUrl(PictureSize.M)).into(view.imageViewProductListItemImage)
+            }
+            view.imageViewProductListItemImage
             view.isEnabled = true
         }
     }
