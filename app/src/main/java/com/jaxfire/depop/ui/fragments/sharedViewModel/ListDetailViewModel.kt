@@ -21,6 +21,8 @@ class ListDetailViewModel(
     val products = MutableLiveData<List<Product>>()
     val showErrorMessage = MutableLiveData<String>()
 
+    var selectedProduct: Product? = null
+
     init {
         fetchProducts()
     }

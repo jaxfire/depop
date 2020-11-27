@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jaxfire.depop.R
 import com.jaxfire.depop.ui.fragments.sharedViewModel.ListDetailViewModel
+import kotlinx.android.synthetic.main.fragment_detail.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class DetailFragment : Fragment() {
@@ -27,5 +28,6 @@ class DetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        textViewDetailFragmentUserId.text = viewModel.selectedProduct?.userId.toString()
     }
 }
