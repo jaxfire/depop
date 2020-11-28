@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
-        tools:src="@drawable/example_image"/>
+        tools:src="@drawable/example_product_image"/>
 
     <View
         android:layout_width="match_parent"
