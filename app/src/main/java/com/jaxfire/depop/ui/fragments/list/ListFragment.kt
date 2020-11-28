@@ -27,10 +27,7 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     private val errorObserver = Observer<String> { errorMessage ->
         containerListFragmentErrorOverlay.visibility = VISIBLE
         textViewListFragmentErrorMessage.text = errorMessage
-    }
 
-    private val showProgressSpinnerObserver = Observer<Boolean> { requestInProgress ->
-        progressBarListFragment.visibility = if (requestInProgress) VISIBLE else GONE
     }
 
     private val productsObserver = Observer<List<Product>> { products ->
@@ -52,7 +49,6 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
         recyclerViewListFragmentProduct.adapter = adapter
 
         viewModel.showErrorMessage.observe(viewLifecycleOwner, errorObserver)
-        viewModel.showProgressSpinner.observe(viewLifecycleOwner, showProgressSpinnerObserver)
         viewModel.products.observe(viewLifecycleOwner, productsObserver)
     }
 
