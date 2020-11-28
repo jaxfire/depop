@@ -32,6 +32,7 @@ class PictureAdapter(
             Glide
                 .with(view)
                 .load(url)
+                .error(R.drawable.depop_min)
                 .into(view.pagerImageView)
         }
     }

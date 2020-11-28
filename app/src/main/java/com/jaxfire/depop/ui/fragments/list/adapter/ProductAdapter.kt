@@ -60,10 +60,14 @@ class ProductAdapter(
             this.product = product
             view.textViewProductListItemTitle.text = product.userId.toString()
             view.textViewProductListItemShortDescription.text = product.description
+
+            // Could run checks here to determine PictureSize - see README
             Glide
                 .with(view)
                 .load(product.pictures.firstOrNull()?.getImageUrl(PictureSize.S))
+                .error(R.drawable.depop_min)
                 .into(view.imageViewProductListItemImage)
+
             view.isClickable = true
         }
     }
