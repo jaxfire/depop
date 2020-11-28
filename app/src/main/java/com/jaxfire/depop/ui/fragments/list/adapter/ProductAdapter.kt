@@ -62,7 +62,7 @@ class ProductAdapter(
             view.textViewProductListItemShortDescription.text = product.description
             Glide
                 .with(view)
-                .load(product.pictures.firstOrNull()?.getImageUrl(PictureSize.M))
+                .load(product.pictures.firstOrNull()?.getImageUrl(PictureSize.S))
                 .into(view.imageViewProductListItemImage)
             view.isClickable = true
         }
