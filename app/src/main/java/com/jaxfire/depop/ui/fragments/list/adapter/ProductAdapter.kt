@@ -52,9 +52,7 @@ class ProductAdapter(
             view.isClickable = false
         }
 
-        override fun onClick(v: View) {
-            itemClickListener.productSelectionHandler(product)
-        }
+        override fun onClick(v: View) = itemClickListener.productSelectionHandler(product)
 
         fun bindProduct(product: Product) {
             this.product = product

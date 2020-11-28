@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jaxfire.depop.R
 import com.jaxfire.depop.data.repository.entity.Product
+import com.jaxfire.depop.data.repository.entity.Product.Picture
+import com.jaxfire.depop.data.repository.entity.Product.Picture.PictureSize
 import com.jaxfire.depop.ui.fragments.detail.adapter.PictureAdapter
 import com.jaxfire.depop.ui.fragments.sharedViewModel.ListDetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -28,17 +30,19 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initProductImageViewPager()
+        // Could run checks here to determine PictureSize - see README
+        initProductImageViewPager(PictureSize.M)
     }
 
-    private fun initProductImageViewPager() {
+    private fun initProductImageViewPager(pictureSize: PictureSize) {
+
         val pictures = viewModel.selectedProduct?.pictures.apply {
             this?.subList(0, min(this.size, 4)) ?: listOf()
         }
         if (!pictures.isNullOrEmpty()) {
             viewPagerDetailFragment.visibility = VISIBLE
             val pagerAdapter =
-                PictureAdapter(pictures.map { it.getImageUrl(Product.Picture.PictureSize.M) })
+                PictureAdapter(pictures.map { it.getImageUrl(pictureSize) })
             viewPagerDetailFragment.adapter = pagerAdapter
             worm_dots_indicator.setViewPager2(viewPagerDetailFragment)
         } else {
@@ -48,6 +52,7 @@ class DetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         textViewDetailFragmentUserId.text = viewModel.selectedProduct?.userId.toString()
         textViewDetailFragmentDescription.text = viewModel.selectedProduct?.description ?: ""
     }
