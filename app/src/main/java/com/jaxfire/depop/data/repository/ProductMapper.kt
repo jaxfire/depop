@@ -1,7 +1,8 @@
 package com.jaxfire.depop.data.repository
 
+import com.jaxfire.depop.data.network.response.NO_SIZE_SUPPLIED
 import com.jaxfire.depop.data.network.response.ProductResponse
-import com.jaxfire.depop.data.network.response.ProductResponse.ProductData.FormatData
+import com.jaxfire.depop.data.network.response.ProductResponse.ProductData.FormatDataContainer.FormatData
 import com.jaxfire.depop.data.repository.entity.Product
 import com.jaxfire.depop.data.repository.entity.Product.Picture
 import com.jaxfire.depop.data.repository.entity.Product.Picture.*
@@ -9,31 +10,52 @@ import com.jaxfire.depop.data.repository.entity.Product.Picture.*
 class ProductMapper {
 
     fun mapToDomainProducts(dataProducts: List<ProductResponse.ProductData>): List<Product> {
-        return dataProducts.map { product ->
-            Product(
-                userId = product.id,
-                description = product.description,
-                pictures = product.picturesData.map { pictureData ->
+        return dataProducts.map { rawProduct ->
 
-                    val formats = HashMap<PictureSize, String>()
+            val pictures = mutableListOf<Picture>()
 
-                    addFormat(formats, pictureData.formats.p1)
-                    addFormat(formats, pictureData.formats.p2)
-                    addFormat(formats, pictureData.formats.p4)
-                    addFormat(formats, pictureData.formats.p5)
-                    addFormat(formats, pictureData.formats.p6)
-                    addFormat(formats, pictureData.formats.p7)
-                    addFormat(formats, pictureData.formats.p8)
+            // Map picture data
+            if (rawProduct.picturesData != null) {
 
-                    Picture(formats = formats)
+                rawProduct.picturesData.forEach { rawPictureData ->
+
+                    if (rawPictureData.formats != null) {
+                        val formatsList = mutableListOf<Pair<PictureSize, String>?>()
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p1))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p2))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p4))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p5))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p6))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p7))
+                        formatsList.add(generateFormatPair(rawPictureData.formats.p8))
+
+                        val validFormats =
+                            formatsList.filterNotNull().associateBy({ it.first }, { it.second })
+                        if (validFormats.isNotEmpty()) {
+                            pictures.add(Picture(validFormats))
+                        }
+                    }
                 }
+            }
+
+            return@map Product(
+                userId = rawProduct.id,
+                description = rawProduct.description,
+                pictures = pictures
             )
         }
     }
 
-    private fun addFormat(formats: HashMap<PictureSize, String>, formatData: FormatData.FormatData) {
-        if (formatData.equals("null").not()) {
-            formats[getSize(formatData.width)] = formatData.url
+    private fun generateFormatPair(formatData: FormatData?): Pair<PictureSize, String>? {
+        return if (
+            formatData == null ||
+            formatData.width == NO_SIZE_SUPPLIED ||
+            formatData.height == NO_SIZE_SUPPLIED ||
+            formatData.url.isEmpty()
+        ) {
+            null
+        } else {
+            Pair(getSize(formatData.width), formatData.url)
         }
     }
 

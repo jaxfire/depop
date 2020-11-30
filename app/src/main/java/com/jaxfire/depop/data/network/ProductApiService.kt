@@ -10,7 +10,7 @@ import retrofit2.http.GET
 interface ProductApiService {
 
     @GET("products/popular/?offset_id=")
-    suspend fun getProducts(): ProductResponse
+    suspend fun getPopularProducts(): ProductResponse
 
     companion object {
         operator fun invoke(

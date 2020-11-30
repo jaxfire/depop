@@ -15,5 +15,6 @@ ext {
 
     // Testing
     jUnitVersion = '4.13.1'
-    mockitoVersion = '2.2.0'
+    truthVersion = '1.0.1'
+    mockitoVersion = '3.6.28'
 }
