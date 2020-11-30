@@ -23,7 +23,6 @@ class RemoteDataSourceImplTest : KoinTest {
         modules(appModule)
     }
 
-    // required to make your Mock via Koin
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
@@ -33,9 +32,12 @@ class RemoteDataSourceImplTest : KoinTest {
     fun `GIVEN The API response's json property 'objects' is null WHEN the popular products are requested THEN return an empty list of products`() {
         declareMock<ProductApiService> {
             runBlocking {
-                given(getPopularProducts()).willReturn(buildProductResponse(productData = null))
-                assertThat(remoteDataSource.getProducts()).isEmpty()
+                given(getPopularProducts()).willReturn(buildProductResponse(numOfProducts = 0, productData = null))
             }
+        }
+
+        runBlocking {
+            assertThat(remoteDataSource.getProducts()).isEmpty()
         }
     }
 
