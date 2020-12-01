@@ -3,12 +3,11 @@ package com.jaxfire.depop.ui.fragments.detail
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jaxfire.depop.R
-import com.jaxfire.depop.data.repository.entity.Product
-import com.jaxfire.depop.data.repository.entity.Product.Picture
 import com.jaxfire.depop.data.repository.entity.Product.Picture.PictureSize
 import com.jaxfire.depop.ui.fragments.detail.adapter.PictureAdapter
 import com.jaxfire.depop.ui.fragments.sharedViewModel.ListDetailViewModel

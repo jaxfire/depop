@@ -52,7 +52,7 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        linearLayoutManager = LinearLayoutManager(requireContext())
+        linearLayoutManager = LinearLayoutManager(context)
         recyclerViewListFragmentProduct.layoutManager = linearLayoutManager
         adapter = ProductAdapter(mutableListOf(), this)
         recyclerViewListFragmentProduct.adapter = adapter
@@ -65,5 +65,5 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     override fun productSelectionHandler(product: Product) {
         viewModel.selectedProduct = product
         findNavController().navigate(R.id.action_listFragment_to_detailFragment)
-    }
+    }   
 }
