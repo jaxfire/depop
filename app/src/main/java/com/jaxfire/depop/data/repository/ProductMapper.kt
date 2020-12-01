@@ -14,7 +14,6 @@ class ProductMapper {
 
             val pictures = mutableListOf<Picture>()
 
-            // Map picture data
             if (rawProduct.picturesData != null) {
 
                 rawProduct.picturesData.forEach { rawPictureData ->

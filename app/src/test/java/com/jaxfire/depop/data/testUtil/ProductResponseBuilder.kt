@@ -44,12 +44,15 @@ fun buildProductData(
         5 lines example description,
         5 lines example description,
         """.trimMargin(),
-    numOfPictures: Int = 1,
+    numOfPictures: Int = 0,
     picturesData: List<PictureData>? = null
 ): ProductData {
-    val pictures = mutableListOf<PictureData>()
-    repeat(numOfPictures) {
-        pictures.add(buildPictureData())
+    var pictures: MutableList<PictureData>? = null
+    if (numOfPictures > 0) {
+        pictures = mutableListOf()
+        repeat(numOfPictures) {
+            pictures.add(buildPictureData())
+        }
     }
     return ProductData(id, description, picturesData ?: pictures)
 }
