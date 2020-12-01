@@ -24,17 +24,17 @@ class ListDetailViewModel(
     var selectedProduct: Product? = null
 
     init {
-        fetchProducts()
+        getPopularProducts()
     }
 
-    private fun fetchProducts() {
+    private fun getPopularProducts() {
         showProgressSpinner.postValue(true)
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            when (val response = productRepository.getAllProducts()) {
+            when (val response = productRepository.getPopularProducts()) {
                 is ResultWrapper.Success<List<Product>> -> handleSuccess(response.value)
-                is ResultWrapper.NetworkError -> handleNetworkError()
+                is ResultWrapper.NetworkConnectivityError -> handleNetworkError()
                 is ResultWrapper.GenericError -> handleGenericError()
             }
             showProgressSpinner.postValue(false)

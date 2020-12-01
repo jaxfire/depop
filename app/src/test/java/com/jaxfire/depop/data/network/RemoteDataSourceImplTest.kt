@@ -37,7 +37,7 @@ class RemoteDataSourceImplTest : KoinTest {
         }
 
         runBlocking {
-            assertThat(remoteDataSource.getProducts()).isEmpty()
+            assertThat(remoteDataSource.getPopularProducts()).isEmpty()
         }
     }
 
@@ -50,8 +50,8 @@ class RemoteDataSourceImplTest : KoinTest {
         }
 
         runBlocking {
-            assertThat(remoteDataSource.getProducts()).isNotEmpty()
-            assertThat(remoteDataSource.getProducts()).hasSize(4)
+            assertThat(remoteDataSource.getPopularProducts()).isNotEmpty()
+            assertThat(remoteDataSource.getPopularProducts()).hasSize(4)
         }
     }
 }

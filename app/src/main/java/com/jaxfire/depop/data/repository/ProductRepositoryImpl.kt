@@ -1,7 +1,5 @@
 package com.jaxfire.depop.data.repository
 
-import android.util.Log
-import com.jaxfire.depop.data.network.ProductApiService
 import com.jaxfire.depop.data.network.RemoteDataSource
 import com.jaxfire.depop.data.repository.entity.Product
 import com.jaxfire.depop.internal.NoConnectivityException
@@ -9,26 +7,28 @@ import retrofit2.HttpException
 
 class ProductRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
-    private val productMapper: ProductMapper
+    private val productMapper: ProductMapper,
 ) : ProductRepository {
 
-    override suspend fun getAllProducts(): ResultWrapper<List<Product>> {
+    override suspend fun getPopularProducts(): ResultWrapper<List<Product>> {
 
         try {
             return ResultWrapper.Success(
-                productMapper.mapToDomainProducts(remoteDataSource.getProducts())
+                productMapper.mapToDomainProducts(remoteDataSource.getPopularProducts())
             )
         } catch (throwable: Throwable) {
             return when (throwable) {
                 is NoConnectivityException -> {
-                    ResultWrapper.NetworkError
+                    ResultWrapper.NetworkConnectivityError
                 }
                 is HttpException -> {
-                    // TODO: Send HTTP error to cloud reporting service - throwable.code()
+                    // Example of cloud error reporting
+                    if (throwable.code() >= 500) {
+                        // CloudReporter.reportServerError()
+                    }
                     ResultWrapper.GenericError
                 }
                 else -> {
-                    Log.d("jim", "Generic error: ${throwable.message}")
                     ResultWrapper.GenericError
                 }
             }

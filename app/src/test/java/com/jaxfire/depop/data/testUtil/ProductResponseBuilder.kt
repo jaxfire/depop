@@ -1,6 +1,5 @@
 package com.jaxfire.depop.data.testUtil
 
-import android.os.Process
 import com.jaxfire.depop.data.network.response.ProductResponse
 import com.jaxfire.depop.data.network.response.ProductResponse.ProductData
 import com.jaxfire.depop.data.network.response.ProductResponse.ProductData.FormatDataContainer
