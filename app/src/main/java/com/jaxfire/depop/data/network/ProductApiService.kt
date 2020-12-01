@@ -18,7 +18,7 @@ interface ProductApiService {
         ): ProductApiService {
 
             val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(connectivityInterceptor)
+                .addNetworkInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()

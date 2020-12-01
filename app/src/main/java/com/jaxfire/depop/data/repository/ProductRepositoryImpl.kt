@@ -11,7 +11,6 @@ class ProductRepositoryImpl(
 ) : ProductRepository {
 
     override suspend fun getPopularProducts(): ResultWrapper<List<Product>> {
-
         try {
             return ResultWrapper.Success(
                 productMapper.mapToDomainProducts(remoteDataSource.getPopularProducts())

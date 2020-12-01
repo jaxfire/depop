@@ -24,14 +24,23 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
     private lateinit var adapter: ProductAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
-    private val errorObserver = Observer<String> { errorMessage ->
-        containerListFragmentErrorOverlay.visibility = VISIBLE
-        textViewListFragmentErrorMessage.text = errorMessage
-
-    }
-
     private val productsObserver = Observer<List<Product>> { products ->
         adapter.setProducts(products)
+    }
+
+    private val showNoResultsOverlayObserver = Observer<Boolean> { showNoResultsOverlay ->
+        if (showNoResultsOverlay) {
+            containerListFragmentMessageOverlay.visibility = VISIBLE
+            textViewListFragmentMessage.text = getString(R.string.no_results_message)
+        } else {
+            containerListFragmentMessageOverlay.visibility = GONE
+            textViewListFragmentMessage.text = ""
+        }
+    }
+
+    private val errorObserver = Observer<String> { errorMessage ->
+        containerListFragmentMessageOverlay.visibility = VISIBLE
+        textViewListFragmentMessage.text = errorMessage
     }
 
     override fun onCreateView(
@@ -48,8 +57,9 @@ class ListFragment : Fragment(), ProductAdapter.ProductItemClickListener {
         adapter = ProductAdapter(mutableListOf(), this)
         recyclerViewListFragmentProduct.adapter = adapter
 
-        viewModel.showErrorMessage.observe(viewLifecycleOwner, errorObserver)
         viewModel.products.observe(viewLifecycleOwner, productsObserver)
+        viewModel.showNoResultsOverlay.observe(viewLifecycleOwner, showNoResultsOverlayObserver)
+        viewModel.showErrorMessage.observe(viewLifecycleOwner, errorObserver)
     }
 
     override fun productSelectionHandler(product: Product) {

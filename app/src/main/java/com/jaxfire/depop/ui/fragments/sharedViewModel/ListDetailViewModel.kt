@@ -17,8 +17,9 @@ class ListDetailViewModel(
     private val productRepository: ProductRepository
 ) : AndroidViewModel(application) {
 
-    val showProgressSpinner = MutableLiveData<Boolean>()
     val products = MutableLiveData<List<Product>>()
+    val showProgressSpinner = MutableLiveData<Boolean>()
+    val showNoResultsOverlay = MutableLiveData<Boolean>()
     val showErrorMessage = MutableLiveData<String>()
 
     var selectedProduct: Product? = null
@@ -42,7 +43,12 @@ class ListDetailViewModel(
     }
 
     private fun handleSuccess(result: List<Product>) {
-        products.postValue(result)
+        if (result.isNotEmpty()) {
+            products.postValue(result)
+            showNoResultsOverlay.postValue(false)
+        } else {
+            showNoResultsOverlay.postValue(true)
+        }
     }
 
     private fun handleNetworkError() {
