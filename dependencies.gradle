@@ -12,6 +12,7 @@ ext {
     converterGsonVersion = '2.6.2'
     glideVersion = '4.11.0'
     viewPagerDotsVersion = '4.1.2'
+    leakCanaryVersion = '2.5'
 
     // Testing
     jUnitVersion = '4.13.1'

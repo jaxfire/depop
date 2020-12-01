@@ -30,7 +30,8 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Could run checks here to determine PictureSize - see README
+        // Could run checks here to determine PictureSize
+        // E.g. is DataSaver mode enabled, are they on WI-FI or mobile data etc
         initProductImageViewPager(PictureSize.M)
     }
 
